@@ -1,0 +1,154 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google Font Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'email_scanner/css/mail.css' %}">
+
+  <title>Email Scanner</title>
+</head>
+
+<body>
+  <!-- Header Starts -->
+  <div class="header">
+
+    <div class="header__left">
+      <img src="{% static 'email_scanner/images/scanner_logo.jpg' %}" alt="Image description">
+      <span>
+        <h2> Email Scanner</h2>
+      </span>
+
+    </div>
+
+    <div class="header__middle">
+      <span class="material-icons"> search </span>
+      <input type="text" placeholder="Search mail" />
+      <span class="material-icons"> arrow_drop_down </span>
+    </div>
+
+    <div class="header__right">
+
+      <span class="material-icons"> notifications </span>
+      <span class="material-icons"> account_circle </span>
+    </div>
+  </div>
+  <!-- Header Ends -->
+
+  <!-- Main Body Starts -->
+  <div class="main__body">
+    <!-- Sidebar Starts -->
+    <div class="sidebar">
+      <br><br><br>
+      <div class="sidebarOption sidebarOption__active">
+        <span class="material-icons"> inbox </span>
+        <h3>Inbox</h3>
+      </div>
+    </div>
+    <!-- Sidebar Ends -->
+
+    <!-- Email List Starts -->
+
+    <div class="emailList">
+      <!-- Settings Starts -->
+      <div class="emailList__settings">
+        <div class="emailList__settingsLeft">
+          <input type="checkbox" />
+          <span class="material-icons"> arrow_drop_down </span>
+
+        </div>
+        <div class="emailList__settingsRight">
+          <span class="material-icons"> chevron_left </span>
+          <span class="material-icons"> chevron_right </span>
+          <span class="material-icons"> keyboard_hide </span>
+          <span class="material-icons"> settings </span>
+        </div>
+      </div>
+      <!-- Settings Ends -->
+
+      <!-- Section Starts -->
+      <div class="emailList__sections">
+        <div class="section section__selected">
+          <span class="material-icons"> inbox </span>
+          <h4>Primary</h4>
+        </div>
+
+      </div>
+      <!-- Section Ends -->
+
+      <!-- Email List rows starts -->
+      <div class="email-container">
+        <!-- Email Details -->
+        <div class="email-details">
+          <h3 class="email-title">{{ email.subject }}</h3>
+          <br>
+          <div class="email-info">
+            <p><strong>From:</strong> {{ email.from_email }}</p>
+            <p><strong>Date:</strong> {{ email.scan_date }}</p>
+          </div>
+          <br>
+          <div class="email-body">
+            <p><strong>Body:</strong></p>
+            <p>{{ email.body }}</p>
+          </div>
+        </div>
+        <br>
+        <!-- Header analysis -->
+        <h4>Header Analysis</h4>
+        <div class="header-analysis">
+          <pre class="received-headers">{{ email.header_analysis|safe }}</pre>
+        </div>
+
+        <br>
+        <!-- Attachments and links -->
+        <br>
+        <h2>Machine Learning Analysis</h2>
+        <div class="ml-analysis">
+          <p><strong>Email Status:</strong> {{ email.ml_analysis }}</p>
+        </div>
+        <br><br>
+
+        <h2>Scan Results</h2>
+        <div class="scan-results">
+          <h4>Attachments</h4>
+          {% if email.attachment_scan_results.count %}
+          {% for attachment in email.attachment_scan_results.all %}
+          <div class="attachment">
+            <pre>{{ attachment.file }}: <strong>{{ attachment.status }}</strong> - {{ attachment.details }}</pre>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p>No attachments found.</p>
+          {% endif %}
+          <br>
+          <h4>Links</h4>
+          {% if email.links_scan_results.count %}
+          {% for link in email.links_scan_results.all %}
+          <div class="link">
+            <pre>{{ link.url }}: <strong>{{ link.status }}</strong> - {{ link.details|safe }}</pre> <!-- Use |safe filter -->
+          </div>
+          {% endfor %}
+          {% else %}
+          <p>No links found.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Email Row Starts -->
+
+      <!-- Email Row Ends -->
+
+      <!-- Email List rows Ends -->
+
+      <!-- Email List Ends -->
+    </div>
+    <!-- Main Body Ends -->
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Font Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'email_scanner/css/mail.css' %}">
+
+    <title>Email Scanner</title>
+  </head>
+  <body>
+    <!-- Header Starts -->
+    <div class="header">
+      
+      <div class="header__left">
+        <img src="{% static 'email_scanner/images/scanner_logo.jpg' %}" alt="Image description">
+        <span> <h2> Email Scanner</h2></span>
+
+      </div>
+
+      <div class="header__middle">
+        <span class="material-icons"> search </span>
+        <input type="text" placeholder="Search mail" />
+        <span class="material-icons"> arrow_drop_down </span>
+      </div>
+
+      <div class="header__right">
+        
+        <span class="material-icons"> notifications </span>
+        <span class="material-icons"> account_circle </span>
+      </div>
+    </div>
+    <!-- Header Ends -->
+
+    <!-- Main Body Starts -->
+    <div class="main__body">
+      <!-- Sidebar Starts -->
+      <div class="sidebar">
+        <br><br><br>
+        <div class="sidebarOption sidebarOption__active">
+          <span class="material-icons"> inbox </span>
+          <h3>Inbox</h3>
+        </div>
+
+        
+      </div>
+      <!-- Sidebar Ends -->
+
+      <!-- Email List Starts -->
+
+       
+      <div class="emailList">
+        <!-- Settings Starts -->
+        <div class="emailList__settings">
+          <div class="emailList__settingsLeft">
+            <input type="checkbox" />
+            <span class="material-icons"> arrow_drop_down </span>
+            
+          </div>
+          <div class="emailList__settingsRight">
+            <span class="material-icons"> chevron_left </span>
+            <span class="material-icons"> chevron_right </span>
+            <span class="material-icons"> keyboard_hide </span>
+            <span class="material-icons"> settings </span>
+          </div>
+        </div>
+        <!-- Settings Ends -->
+
+        <!-- Section Starts -->
+        <div class="emailList__sections">
+          <div class="section section__selected">
+            <span class="material-icons"> inbox </span>
+            <h4>Primary</h4>
+          </div>
+
+          
+        </div>
+        <!-- Section Ends -->
+
+        <!-- Email List rows starts -->
+        <div class="emailList__list">
+          <!-- Email Row Starts -->
+          {% for result in email_scan_results %}
+          <div class="emailRow" onclick="window.location.href='{% url 'email_detail' result.id %}'">
+              <div class="emailRow__options">
+                  <input type="checkbox" />
+                  <span class="material-icons"> star_border </span>
+                  <span class="material-icons"> label_important </span>
+              </div>
+      
+              <h3 class="emailRow__title">{{ result.subject }}</h3>
+      
+              <div class="emailRow__message">
+                  <h4>
+                      {{ result.from_email }}
+                      <span class="emailRow__description"> - {{ result.header_analysis }}</span>
+                  </h4>
+              </div>
+      
+              <p class="emailRow__time">{{ result.scan_date }}</p>
+          </div>
+          {% empty %}
+          <p>No emails found</p>
+          {% endfor %}
+      </div>
+      
+        
+         <!-- Email Row Starts -->
+        
+         <!-- Email Row Ends -->
+
+        <!-- Email List rows Ends -->
+      </div>
+      <!-- Email List Ends -->
+    </div>
+    <!-- Main Body Ends -->
+
+   
+  </body>
+</html>
