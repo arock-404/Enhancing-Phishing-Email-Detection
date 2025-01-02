@@ -25,11 +25,11 @@ from django.conf import settings
 
 
 # Email account credentials
-username = "forcspproject@gmail.com"
-password = "ltlmeynncjldogwh"
+username = "YOUR-EMAIL"
+password = "YOUR-PASSWORD"
 
 # VirusTotal API key
-VT_API_KEY = "e9a106daa260216888507bd3224332b091e51b8d2358b7b81701fdaf6ee12e52"
+VT_API_KEY = "VIRUS-TOTAL-API-KEY"
 
 # ClamAV Docker container details
 container_host = "127.0.0.1"
