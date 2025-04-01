@@ -11,8 +11,8 @@ from bs4 import BeautifulSoup
 
 # Email account credentials
 
-username = "forcspproject@gmail.com"
-password = "ltlmeynncjldogwh"
+username = "email"
+password = "password"
 
 
 
